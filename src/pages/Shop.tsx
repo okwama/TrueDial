@@ -4,7 +4,9 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+
 import { useCart } from "@/contexts/CartContext";
 import { Loader2, ShoppingBag, Filter } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -127,12 +129,13 @@ const Shop = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {products?.map((watch) => (
               <div key={watch.id} className="group bg-white rounded-lg shadow-sm border overflow-hidden hover:shadow-md transition-shadow flex flex-col">
-                <div className="aspect-square relative overflow-hidden bg-gray-100">
+                <Link to={`/product/${watch.slug}`} className="aspect-square relative overflow-hidden bg-gray-100 block">
                   <img
                     src={watch.product_images?.[0]?.image_url || watch.image || watch.image_url || "/placeholder.svg"}
                     alt={watch.name}
                     className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
                   />
+
                   {watch.condition === "New" && (
                     <span className="absolute top-3 left-3 bg-primary text-primary-foreground text-xs px-2 py-1 rounded-full uppercase tracking-wider font-medium">
                       New
@@ -143,13 +146,17 @@ const Shop = () => {
                       <span className="bg-red-500 text-white px-3 py-1 rounded font-bold uppercase">Sold Out</span>
                     </div>
                   )}
-                </div>
+                </Link>
+
                 <div className="p-5 flex-1 flex flex-col">
                   <div className="flex justify-between items-start mb-2">
                     <div>
                       <p className="text-sm text-primary font-medium mb-1">{watch.brands?.name || "Unknown Brand"}</p>
-                      <h3 className="font-serif text-lg font-bold">{watch.name}</h3>
+                      <Link to={`/product/${watch.slug}`} className="hover:text-primary transition-colors">
+                        <h3 className="font-serif text-lg font-bold">{watch.name}</h3>
+                      </Link>
                     </div>
+
                     <Badge variant="outline" className="text-xs">
                       {watch.condition}
                     </Badge>
@@ -178,10 +185,11 @@ const Shop = () => {
               </div>
             ))}
           </div>
-        )}
-      </main>
+        )
+        }
+      </main >
       <Footer />
-    </div>
+    </div >
   );
 };
 

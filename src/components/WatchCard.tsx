@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
 import { MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import type { Watch } from "@/data/watches";
+
 
 interface WatchCardProps {
   watch: any;
@@ -34,12 +36,13 @@ const WatchCard = ({ watch, index = 0 }: WatchCardProps) => {
       className="group"
     >
       {/* Image */}
-      <div className="relative aspect-square bg-background overflow-hidden mb-4">
+      <Link to={`/product/${watch.slug}`} className="block relative aspect-square bg-background overflow-hidden mb-4 rounded-lg border border-border/50">
         <img
           src={image}
           alt={watch.name}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
+
 
         {/* Condition badge */}
         <div
@@ -56,7 +59,8 @@ const WatchCard = ({ watch, index = 0 }: WatchCardProps) => {
             </span>
           </div>
         )}
-      </div>
+      </Link>
+
 
       {/* Details */}
       <div className="space-y-2">
@@ -64,7 +68,9 @@ const WatchCard = ({ watch, index = 0 }: WatchCardProps) => {
           {brandName} · {watch.movement}
         </p>
 
-        <h3 className="font-serif text-lg">{watch.name}</h3>
+        <Link to={`/product/${watch.slug}`} className="block hover:text-primary transition-colors">
+          <h3 className="font-serif text-lg">{watch.name}</h3>
+        </Link>
 
         <p className="text-sm text-muted-foreground line-clamp-2">
           {watch.description}
